@@ -14,9 +14,12 @@ datasource db {
 }
 
 model products{
-  product_T String @id 
+  product_Thumbnail String @id @default(uuid())
   product_Title String
   productDescription String
   productCost Float
   onOffer Boolean
+
+  @@unique([product_Thumbnail, product_Title])
+  @@map("products_table")
 }

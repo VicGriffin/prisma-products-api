@@ -2,6 +2,9 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client'
 import productsRouter from './routes/products.routes';
 const prisma = new PrismaClient();
+const express = require('express');
+app.use(express.json());
+
 
 const app = express ();
 app.use("/products", productsRouter)
