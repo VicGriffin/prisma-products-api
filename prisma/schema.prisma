@@ -10,12 +10,10 @@ generator client {
 }
 
 model Product {
-  id                Int      @id @default(autoincrement())
+  id                String     @id @default(uuid())
   product_Thumbnail String
   product_Title     String
   productDescription String
   productCost       Float
   onOffer           Boolean
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
 }

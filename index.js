@@ -1,9 +1,9 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import productsRoutes from './routes/products.routes.js';
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
+dotenv.config();
 
-config();
 const app = express();
 const prisma = new PrismaClient();
 
