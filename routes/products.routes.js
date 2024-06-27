@@ -1,35 +1,28 @@
-import { Router } from "express";
-import { PrismaClient } from "@prisma/client/extension";
+import { Router } from 'express';
+import { PrismaClient } from '@prisma/client';
 
- 
 const router = Router();
-const prisma = newPrismaClient();
+const prisma = new PrismaClient();
 
-router.get( "/", async(req,res) =>{
-    try {
-        const{product_Thumbnail, product_Title, productDescription,productCost,onOffer} = req.body;
-        const newProduct = await prisma.product.create({
-            data: {
-                product_Thumbnail: product_Thumbnail,
-                product_Title: product_Title,
-                productDescription: productDescription,
-                productCost: productCost,
-                onOffer: onOffer
-            }
-        })
-        res.status(201).json(newProduct);
-    } catch (error) {
-        res.status(500).json({success: false, message:e.message})
-    }
-} )
-router.post("/", (req,res) =>{
-    res.send("create a product")
-} )
-router.patch("/:id", (req,res) =>{
-    res.send("update a product")
-})
-router.delete("/:id", (req,res) =>{
-    res.send("delete a product")
-})
+router.get('/', async (req, res) => {
+  try {
+    const products = await prisma.product.findMany();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching products.' });
+  }
+});
 
-export default router
+router.post('/', async (req, res) => {
+  try {
+    const { product_Thumbnail, product_Title, productDescription, productCost, onOffer } = req.body;
+    const product = await prisma.product.create({
+      data: { product_Thumbnail, product_Title, productDescription, productCost, onOffer },
+    });
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while creating the product.' });
+  }
+});
+
+export default router;
